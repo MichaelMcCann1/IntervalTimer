@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import WorkoutControls from "../components/WorkoutOption";
+import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
 const Container = styled.div`
   width: 100%;
@@ -9,30 +11,50 @@ const Container = styled.div`
   color: white;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Header = styled.div`
   display: flex;
-  justify-content: center;
-  margin-top: 30px;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  max-width: 500px;
+  margin-top: 50px;
+`;
+
+const IconWrapper = styled.button`
+  cursor: pointer;
+  background: inherit;
+  border: none;
+  color: white;
 `;
 
 const WorkoutName = styled.p`
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 500;
+  text-align: center;
+  margin: 0 20px;
+
 `;
 
 const Timer = styled.p`
-  font-size: 50px;
+  font-size: 70px;
   font-weight: 600;
-  margin: 50px auto;
 `;
 
 export default function WorkoutSetup() {
   return (
     <Container>
       <Header>
+        <IconWrapper>
+          <KeyboardBackspaceRoundedIcon sx={{ fontSize: "30px" }} />
+        </IconWrapper>
         <WorkoutName>Workout Name</WorkoutName>
+        <IconWrapper>
+          <DeleteRoundedIcon sx={{ fontSize: "30px" }} />
+        </IconWrapper>
       </Header>
       <Timer>07:50</Timer>
       <WorkoutControls />

@@ -10,12 +10,12 @@ import RoundReset from "./components/RoundReset";
 const Container = styled.div`
   width: 100%;
   background: white;
-  margin-top: auto;
+  margin-top: 50px;
   border-radius: 20px 20px 0 0;
   display: flex;
   flex-direction: column;
   position: relative;
-  padding: 60px 15px 30px 15px;
+  padding:65px 15px 30px 15px;
   gap: 10px;
 `;
 
