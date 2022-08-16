@@ -1,6 +1,12 @@
+import WorkoutSetup from "./routes/WorkoutSetup";
+import { GlobalStyle } from "./components/GlobalStyles";
+
 function App() {
   return (
-    <h1>timer app</h1>
+    <>
+      <GlobalStyle />
+      <WorkoutSetup />
+    </>
   );
 }
 
