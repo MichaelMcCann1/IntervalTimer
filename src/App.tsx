@@ -1,5 +1,5 @@
 import WorkoutSetup from "./routes/WorkoutSetup";
-import { GlobalStyle } from "./components/GlobalStyles";
+import { GlobalStyle } from "./components/GlobalStyles/GlobalStyles";
 
 function App() {
   return (

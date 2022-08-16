@@ -36,7 +36,6 @@ const WorkoutName = styled.p`
   font-weight: 500;
   text-align: center;
   margin: 0 20px;
-
 `;
 
 const Timer = styled.p`
