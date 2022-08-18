@@ -3,6 +3,7 @@ import styled from "styled-components";
 import WorkoutControls from "../components/WorkoutOption";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import TimerPage from "../components/TimerPage";
 
 const Container = styled.div`
   width: 100%;
@@ -13,6 +14,8 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  overflow: hidden;
+  position: relative;
 `;
 
 const Header = styled.div`
@@ -57,6 +60,7 @@ export default function WorkoutSetup() {
       </Header>
       <Timer>07:50</Timer>
       <WorkoutControls />
+      <TimerPage />
     </Container>
   );
 }
