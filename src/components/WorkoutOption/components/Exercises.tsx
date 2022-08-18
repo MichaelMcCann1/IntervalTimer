@@ -4,7 +4,7 @@ import OfflineBoltOutlinedIcon from "@mui/icons-material/OfflineBoltOutlined";
 
 export default function Exercises() {
   return (
-    <Container backgroundColor="rgba(192,192,192, 0.2)">
+    <Container backgroundColor="rgba(192,192,192, 0.3)">
       <IconWrapper>
         <OfflineBoltOutlinedIcon sx={{ color: "gray" }} />
       </IconWrapper>
