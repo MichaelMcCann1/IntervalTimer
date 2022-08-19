@@ -1,6 +1,8 @@
-import React from "react";
+import { useState } from "react";
 import { Slider } from "@mui/material";
 import styled from "styled-components";
+import { TimerPageDataState } from "../../atoms/TimerPageOptions";
+import { useRecoilState } from "recoil";
 
 const Container = styled.div`
   flex: 1;
@@ -68,10 +70,30 @@ const marks = [
   },
 ];
 
-export default function TimerSlider() {
+interface Props {
+  value: number;
+}
+
+export default function TimerSlider({ value }: Props) {
+  const [timerPageData, setTimerPageData] = useRecoilState(TimerPageDataState);
+  const [localValue, setLocalValue] = useState<number>(value);
+
+  const handleChange = (event: Event, newValue: number | number[]) => {
+    setLocalValue(newValue as number);
+    setTimerPageData({ ...timerPageData, value: newValue as number });
+  };
+
   return (
     <Container>
-      <Slider orientation="vertical" marks={marks} step={5} min={5} max={180} />
+      <Slider
+        orientation="vertical"
+        marks={marks}
+        step={5}
+        min={5}
+        max={180}
+        value={localValue}
+        onChange={handleChange}
+      />
     </Container>
   );
 }

@@ -5,15 +5,18 @@ import TimerSlider from "../TimerSlider";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
 import { useRecoilState } from "recoil";
 import { timerPageOpenState } from "../../atoms/timerPageOpen";
+import { TimerPageDataState } from "../../atoms/TimerPageOptions";
+import { TimerPageOption } from "../../Types";
 
 interface ContainerProps {
   open: boolean;
+  backgroundColor: string;
 }
 
 const Container = styled.div<ContainerProps>`
   width: 100vw;
   height: 100vh;
-  background: #6fd16f;
+  background: ${(props) => props.backgroundColor};
   position: absolute;
   top: 0;
   left: ${(props) => (props.open ? "0%" : "100%")};
@@ -51,22 +54,30 @@ const IconWrapper = styled.div`
 
 export default function TimerPage() {
   const [timerPageOpen, setTimerPageOpen] = useRecoilState(timerPageOpenState);
+  const [timerPageData, setTimerPageData] = useRecoilState(TimerPageDataState);
+
+  const { titleText, value, backgroundColor, icon } =
+    timerPageData as TimerPageOption;
 
   const handleClick = () => {
     setTimerPageOpen(false);
   };
 
   return (
-    <Container open={timerPageOpen} onClick={handleClick}>
+    <Container
+      open={timerPageOpen}
+      backgroundColor={backgroundColor}
+      onClick={handleClick}
+    >
       <IconWrapper>
         <KeyboardBackspaceRoundedIcon sx={{ fontSize: "30px" }} />
       </IconWrapper>
       <Header>
-        <PlayCircleOutlineRoundedIcon />
-        <Title>Work</Title>
+        {icon}
+        <Title>{titleText}</Title>
       </Header>
-      <Value>00:20</Value>
-      <TimerSlider />
+      <Value>{value}</Value>
+      <TimerSlider value={value} />
     </Container>
   );
 }
