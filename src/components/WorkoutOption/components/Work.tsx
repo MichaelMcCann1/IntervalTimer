@@ -1,20 +1,21 @@
 import React from "react";
 import { Container, IconWrapper, Title, Count } from "./WorkoutOptionsElements";
 import PlayCircleOutlineRoundedIcon from "@mui/icons-material/PlayCircleOutlineRounded";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { timerPageOpenState } from "../../../atoms/timerPageOpen";
 import { TimerPageDataState } from "../../../atoms/TimerPageOptions";
 
 export default function Work() {
   const setTimerPageOpen = useSetRecoilState(timerPageOpenState);
   const setTimerPageData = useSetRecoilState(TimerPageDataState);
+  const timerPageData = useRecoilValue(TimerPageDataState);
 
   const handleClick = () => {
     setTimerPageOpen(true);
     setTimerPageData({
       backgroundColor: "rgb(111, 209, 111)",
       titleText: "Work",
-      value: 20,
+      value: timerPageData.value,
       icon: <PlayCircleOutlineRoundedIcon />,
     });
   };
@@ -25,7 +26,7 @@ export default function Work() {
         <PlayCircleOutlineRoundedIcon sx={{ color: "green" }} />
       </IconWrapper>
       <Title>Work</Title>
-      <Count fontColor="green">00:20</Count>
+      <Count fontColor="green">{timerPageData.value}</Count>
     </Container>
   );
 }
