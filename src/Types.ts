@@ -6,3 +6,12 @@ export interface TimerPageOption {
   value: number,
   icon: ReactElement
 }
+
+export interface workoutData {
+  work: number,
+  rest: number,
+  exercises: number,
+  rounds: number,
+  reset: number,
+  name: string,
+}

@@ -4,6 +4,7 @@ import PlayCircleOutlineRoundedIcon from "@mui/icons-material/PlayCircleOutlineR
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { timerPageOpenState } from "../../../atoms/timerPageOpen";
 import { TimerPageDataState } from "../../../atoms/TimerPageOptions";
+import { formatTime } from "../../../utils/formatTime";
 
 export default function Work() {
   const setTimerPageOpen = useSetRecoilState(timerPageOpenState);
@@ -26,7 +27,7 @@ export default function Work() {
         <PlayCircleOutlineRoundedIcon sx={{ color: "green" }} />
       </IconWrapper>
       <Title>Work</Title>
-      <Count fontColor="green">{timerPageData.value}</Count>
+      <Count fontColor="green">{formatTime(timerPageData.value)}</Count>
     </Container>
   );
 }

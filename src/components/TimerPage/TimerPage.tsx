@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import PlayCircleOutlineRoundedIcon from "@mui/icons-material/PlayCircleOutlineRounded";
 import TimerSlider from "../TimerSlider";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
 import { useRecoilState } from "recoil";
 import { timerPageOpenState } from "../../atoms/timerPageOpen";
 import { TimerPageDataState } from "../../atoms/TimerPageOptions";
 import { TimerPageOption } from "../../Types";
+import { workoutDataState } from "../../atoms/workoutData";
+import { formatTime } from "../../utils/formatTime";
 
 interface ContainerProps {
   open: boolean;
@@ -55,6 +56,7 @@ const IconWrapper = styled.div`
 export default function TimerPage() {
   const [timerPageOpen, setTimerPageOpen] = useRecoilState(timerPageOpenState);
   const [timerPageData, setTimerPageData] = useRecoilState(TimerPageDataState);
+  const [workoutData, setWorkoutData] = useRecoilState(workoutDataState);
 
   const { titleText, value, backgroundColor, icon } =
     timerPageData as TimerPageOption;
@@ -63,20 +65,27 @@ export default function TimerPage() {
     setTimerPageOpen(false);
   };
 
+  const closeTimerPage = () => {
+    setWorkoutData({
+      ...workoutData,
+      work: timerPageData.value,
+    });
+  };
+
   return (
     <Container
       open={timerPageOpen}
       backgroundColor={backgroundColor}
       onClick={handleClick}
     >
-      <IconWrapper>
+      <IconWrapper onClick={closeTimerPage}>
         <KeyboardBackspaceRoundedIcon sx={{ fontSize: "30px" }} />
       </IconWrapper>
       <Header>
         {icon}
         <Title>{titleText}</Title>
       </Header>
-      <Value>{value}</Value>
+      <Value>{formatTime(value)}</Value>
       <TimerSlider value={value} />
     </Container>
   );
