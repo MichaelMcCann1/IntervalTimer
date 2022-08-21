@@ -4,6 +4,10 @@ import WorkoutControls from "../components/WorkoutOption";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import TimerPage from "../components/TimerPage";
+import { workoutDataState } from "../atoms/workoutData";
+import { useRecoilValue } from "recoil";
+import { calculateTotalWorkoutTime } from "../utils/calculateTotalWorkoutTime";
+import { formatTime } from "../utils/formatTime";
 
 const Container = styled.div`
   width: 100%;
@@ -47,6 +51,8 @@ const Timer = styled.p`
 `;
 
 export default function WorkoutSetup() {
+  const workoutData = useRecoilValue(workoutDataState);
+
   return (
     <Container>
       <Header>
@@ -58,7 +64,7 @@ export default function WorkoutSetup() {
           <DeleteRoundedIcon sx={{ fontSize: "30px" }} />
         </IconWrapper>
       </Header>
-      <Timer>07:50</Timer>
+      <Timer>{formatTime(calculateTotalWorkoutTime(workoutData))}</Timer>
       <WorkoutControls />
       <TimerPage />
     </Container>

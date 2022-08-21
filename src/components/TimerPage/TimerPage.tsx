@@ -61,23 +61,16 @@ export default function TimerPage() {
   const { titleText, value, backgroundColor, icon } =
     timerPageData as TimerPageOption;
 
-  const handleClick = () => {
-    setTimerPageOpen(false);
-  };
-
   const closeTimerPage = () => {
     setWorkoutData({
       ...workoutData,
       work: timerPageData.value,
     });
+    setTimerPageOpen(false);
   };
 
   return (
-    <Container
-      open={timerPageOpen}
-      backgroundColor={backgroundColor}
-      onClick={handleClick}
-    >
+    <Container open={timerPageOpen} backgroundColor={backgroundColor}>
       <IconWrapper onClick={closeTimerPage}>
         <KeyboardBackspaceRoundedIcon sx={{ fontSize: "30px" }} />
       </IconWrapper>
