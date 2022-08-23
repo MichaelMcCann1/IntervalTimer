@@ -11,10 +11,11 @@ export interface TimerPageOption {
   value: number,
   icon: ReactElement
   option: string,
-  min?: number,
-  max?: number,
-  step?: number,
-  marks?: Marks[],
+  min: number,
+  max: number,
+  step: number,
+  marks: Marks[],
+  valueFormatter: (value: number) => string
 }
 
 export interface workoutData {

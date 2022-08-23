@@ -17,6 +17,7 @@ export default function Exercises() {
       value: workoutData.exercises,
       icon: <OfflineBoltOutlinedIcon />,
       option: workoutDataKeys.exercises,
+      valueFormatter: (value) => `${value}`,
       min: 1,
       max: 30,
       step: 1,

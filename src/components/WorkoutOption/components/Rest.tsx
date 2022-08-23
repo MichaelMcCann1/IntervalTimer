@@ -18,6 +18,7 @@ export default function Rest() {
       value: workoutData.rest,
       icon: <PauseCircleOutlineRoundedIcon />,
       option: workoutDataKeys.rest,
+      valueFormatter: formatTime,
       min: 5,
       max: 180,
       step: 5,

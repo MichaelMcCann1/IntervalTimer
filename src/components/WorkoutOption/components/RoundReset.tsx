@@ -18,6 +18,7 @@ export default function RoundReset() {
       value: workoutData.reset,
       icon: <AccessTimeRoundedIcon />,
       option: workoutDataKeys.reset,
+      valueFormatter: formatTime,
       min: 5,
       max: 180,
       step: 5,

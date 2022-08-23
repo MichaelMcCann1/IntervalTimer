@@ -18,6 +18,7 @@ export default function Work() {
       value: workoutData.work,
       icon: <PlayCircleOutlineRoundedIcon />,
       option: workoutDataKeys.work,
+      valueFormatter: formatTime,
       min: 5,
       max: 180,
       step: 5,

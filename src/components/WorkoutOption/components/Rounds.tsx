@@ -17,6 +17,7 @@ export default function Rounds() {
       value: workoutData.rounds,
       icon: <RefreshRoundedIcon />,
       option: workoutDataKeys.rounds,
+      valueFormatter: value => `${value}X`,
       min: 1,
       max: 5,
       step: 1,

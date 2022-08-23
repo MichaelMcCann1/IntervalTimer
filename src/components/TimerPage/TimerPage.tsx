@@ -58,7 +58,7 @@ export default function TimerPage() {
   const [workoutData, setWorkoutData] = useRecoilState(workoutDataState);
   const timerPageData = useRecoilValue(TimerPageDataState);
 
-  const { titleText, value, backgroundColor, icon, option } =
+  const { titleText, value, backgroundColor, icon, option, valueFormatter } =
     timerPageData as TimerPageOption;
 
   const closeTimerPage = () => {
@@ -78,7 +78,7 @@ export default function TimerPage() {
         {icon}
         <Title>{titleText}</Title>
       </Header>
-      <Value>{formatTime(value)}</Value>
+      <Value>{valueFormatter ? valueFormatter(value) : value}</Value>
       <TimerSlider value={value} />
     </Container>
   );
