@@ -5,6 +5,7 @@ export interface TimerPageOption {
   titleText: string,
   value: number,
   icon: ReactElement
+  option: string,
 }
 
 export interface workoutData {
