@@ -38,36 +38,6 @@ const Container = styled.div`
     }
   }
 `;
-const marks = [
-  {
-    value: 5,
-    label: "5",
-  },
-  {
-    value: 30,
-    label: "30",
-  },
-  {
-    value: 60,
-    label: "60",
-  },
-  {
-    value: 90,
-    label: "90",
-  },
-  {
-    value: 120,
-    label: "120",
-  },
-  {
-    value: 150,
-    label: "150",
-  },
-  {
-    value: 180,
-    label: "180",
-  },
-];
 
 interface Props {
   value: number;
@@ -84,10 +54,10 @@ export default function TimerSlider({ value }: Props) {
     <Container>
       <Slider
         orientation="vertical"
-        marks={marks}
-        step={5}
-        min={5}
-        max={180}
+        marks={timerPageData.marks}
+        step={timerPageData.step}
+        min={timerPageData.min}
+        max={timerPageData.max}
         value={value}
         onChange={handleChange}
       />
