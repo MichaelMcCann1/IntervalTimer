@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import TimerSlider from "../TimerSlider";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { timerPageOpenState } from "../../atoms/timerPageOpen";
 import { TimerPageDataState } from "../../atoms/TimerPageOptions";
 import { TimerPageOption } from "../../Types";
@@ -55,16 +55,16 @@ const IconWrapper = styled.div`
 
 export default function TimerPage() {
   const [timerPageOpen, setTimerPageOpen] = useRecoilState(timerPageOpenState);
-  const [timerPageData, setTimerPageData] = useRecoilState(TimerPageDataState);
   const [workoutData, setWorkoutData] = useRecoilState(workoutDataState);
+  const timerPageData = useRecoilValue(TimerPageDataState);
 
-  const { titleText, value, backgroundColor, icon } =
+  const { titleText, value, backgroundColor, icon, option, valueFormatter } =
     timerPageData as TimerPageOption;
 
   const closeTimerPage = () => {
     setWorkoutData({
       ...workoutData,
-      work: timerPageData.value,
+      [option]: timerPageData.value,
     });
     setTimerPageOpen(false);
   };
@@ -78,7 +78,7 @@ export default function TimerPage() {
         {icon}
         <Title>{titleText}</Title>
       </Header>
-      <Value>{formatTime(value)}</Value>
+      <Value>{valueFormatter ? valueFormatter(value) : value}</Value>
       <TimerSlider value={value} />
     </Container>
   );
