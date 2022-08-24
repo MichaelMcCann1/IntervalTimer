@@ -8,6 +8,7 @@ import { workoutDataState } from "../atoms/workoutData";
 import { useRecoilValue } from "recoil";
 import { calculateTotalWorkoutTime } from "../utils/calculateTotalWorkoutTime";
 import { formatTime } from "../utils/formatTime";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -63,6 +64,7 @@ const Timer = styled.p`
 `;
 
 export default function WorkoutSetup() {
+  const navigate = useNavigate();
   const workoutData = useRecoilValue(workoutDataState);
   const [nameText, setNameText] = useState(workoutData.name);
 
@@ -71,18 +73,26 @@ export default function WorkoutSetup() {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       (event.target as HTMLInputElement).blur();
     }
-  }
+  };
+
+  const handleClick = () => {
+    navigate("/");
+  };
 
   return (
     <Container>
       <Header>
-        <IconWrapper>
+        <IconWrapper onClick={handleClick}>
           <KeyboardBackspaceRoundedIcon sx={{ fontSize: "30px" }} />
         </IconWrapper>
-        <WorkoutName value={nameText} onChange={handleChange} onKeyDown={handleKeyDown}/>
+        <WorkoutName
+          value={nameText}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+        />
         <IconWrapper>
           <DeleteRoundedIcon sx={{ fontSize: "30px" }} />
         </IconWrapper>

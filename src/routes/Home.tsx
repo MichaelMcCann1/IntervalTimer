@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import AddIcon from "@mui/icons-material/Add";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -66,18 +67,24 @@ const ButtonText = styled.p`
 `;
 
 export default function Home() {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/workout-options")
+  }
+
   return (
     <Container>
       <Title>Interval Timer</Title>
       <WorkoutListWrapper>
-        <WorkoutListItem>
+        <WorkoutListItem onClick={handleClick}>
           <WorkoutButtonText>Workout Name</WorkoutButtonText>
           <WorkoutButtonText>4:30</WorkoutButtonText>
         </WorkoutListItem>
       </WorkoutListWrapper>
       <AddWorkoutButton>
         <AddIcon sx={{ fontSize: "40px", color: "rgb(249, 12, 83)" }} />
-        <ButtonText>Add Workout</ButtonText>
+        <ButtonText onClick={handleClick}>Add Workout</ButtonText>
       </AddWorkoutButton>
     </Container>
   );
