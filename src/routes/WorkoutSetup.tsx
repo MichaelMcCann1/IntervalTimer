@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import WorkoutControls from "../components/WorkoutOption";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
@@ -36,13 +36,25 @@ const IconWrapper = styled.button`
   background: inherit;
   border: none;
   color: white;
+  display: grid;
+  place-content: center;
 `;
 
-const WorkoutName = styled.p`
+const WorkoutName = styled.input`
+  background: inherit;
+  border: none;
+  color: white;
+  text-align: center;
   font-size: 24px;
   font-weight: 500;
-  text-align: center;
-  margin: 0 20px;
+  padding: 5px 0;
+  width: 100%;
+  margin: 0 10px;
+
+  :focus {
+    outline: none;
+    background: rgba(0, 0, 0, 0.2);
+  }
 `;
 
 const Timer = styled.p`
@@ -52,6 +64,17 @@ const Timer = styled.p`
 
 export default function WorkoutSetup() {
   const workoutData = useRecoilValue(workoutDataState);
+  const [nameText, setNameText] = useState(workoutData.name);
+
+  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setNameText((event.target as HTMLInputElement).value);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      (event.target as HTMLInputElement).blur();
+    }
+  }
 
   return (
     <Container>
@@ -59,7 +82,7 @@ export default function WorkoutSetup() {
         <IconWrapper>
           <KeyboardBackspaceRoundedIcon sx={{ fontSize: "30px" }} />
         </IconWrapper>
-        <WorkoutName>Workout Name</WorkoutName>
+        <WorkoutName value={nameText} onChange={handleChange} onKeyDown={handleKeyDown}/>
         <IconWrapper>
           <DeleteRoundedIcon sx={{ fontSize: "30px" }} />
         </IconWrapper>
