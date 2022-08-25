@@ -6,8 +6,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { timerPageOpenState } from "../../atoms/timerPageOpen";
 import { TimerPageDataState } from "../../atoms/TimerPageOptions";
 import { TimerPageOption } from "../../Types";
-import { workoutDataState } from "../../atoms/workoutData";
-import { formatTime } from "../../utils/formatTime";
+import { selectedWorkoutDataState } from "../../atoms/selectedWorkoutData";
 
 interface ContainerProps {
   open: boolean;
@@ -55,15 +54,17 @@ const IconWrapper = styled.div`
 
 export default function TimerPage() {
   const [timerPageOpen, setTimerPageOpen] = useRecoilState(timerPageOpenState);
-  const [workoutData, setWorkoutData] = useRecoilState(workoutDataState);
+  const [selectedWorkoutData, setselectedWorkoutData] = useRecoilState(
+    selectedWorkoutDataState
+  );
   const timerPageData = useRecoilValue(TimerPageDataState);
 
   const { titleText, value, backgroundColor, icon, option, valueFormatter } =
     timerPageData as TimerPageOption;
 
   const closeTimerPage = () => {
-    setWorkoutData({
-      ...workoutData,
+    setselectedWorkoutData({
+      ...selectedWorkoutData,
       [option]: timerPageData.value,
     });
     setTimerPageOpen(false);

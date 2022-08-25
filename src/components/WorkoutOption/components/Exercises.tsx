@@ -3,18 +3,18 @@ import { Container, IconWrapper, Title, Count } from "./WorkoutOptionsElements";
 import OfflineBoltOutlinedIcon from "@mui/icons-material/OfflineBoltOutlined";
 import { useTimerPageData } from "../../../utils/hooks/useTimerPageData";
 import { useRecoilValue } from "recoil";
-import { workoutDataState } from "../../../atoms/workoutData";
 import { workoutDataKeys } from "../../../constants/workoutData";
+import { selectedWorkoutDataState } from "../../../atoms/selectedWorkoutData";
 
 export default function Exercises() {
   const setTimerPageData = useTimerPageData();
-  const workoutData = useRecoilValue(workoutDataState);
+  const selectedWorkoutData = useRecoilValue(selectedWorkoutDataState);
 
   const handleClick = () => {
     setTimerPageData({
       backgroundColor: "rgb(219, 223, 219)",
       titleText: "Work",
-      value: workoutData.exercises,
+      value: selectedWorkoutData.exercises,
       icon: <OfflineBoltOutlinedIcon />,
       option: workoutDataKeys.exercises,
       valueFormatter: (value) => `${value}`,
@@ -60,7 +60,7 @@ export default function Exercises() {
         <OfflineBoltOutlinedIcon sx={{ color: "gray" }} />
       </IconWrapper>
       <Title>Exercises</Title>
-      <Count fontColor="gray">{workoutData.exercises}</Count>
+      <Count fontColor="gray">{selectedWorkoutData.exercises}</Count>
     </Container>
   );
 }

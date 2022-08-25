@@ -6,3 +6,12 @@ export const workoutDataKeys = {
   reset: 'reset',
   name: 'name',
 }
+
+export const defaultWorkoutData = {
+  work: 20,
+  rest: 10,
+  exercises: 10,
+  rounds: 1,
+  reset: 20,
+  name: "Workout Name",
+}
