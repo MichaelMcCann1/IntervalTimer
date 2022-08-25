@@ -1,6 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import AddIcon from "@mui/icons-material/Add";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { workoutDataState } from "../atoms/workoutData";
+import { calculateTotalWorkoutTime } from "../utils/calculateTotalWorkoutTime";
+import { formatTime } from "../utils/formatTime";
 
 const Container = styled.div`
   width: 100%;
@@ -66,18 +71,27 @@ const ButtonText = styled.p`
 `;
 
 export default function Home() {
+  const navigate = useNavigate();
+  const workoutData = useRecoilValue(workoutDataState);
+
+  const handleClick = () => {
+    navigate("/workout-options");
+  };
+
   return (
     <Container>
       <Title>Interval Timer</Title>
       <WorkoutListWrapper>
-        <WorkoutListItem>
-          <WorkoutButtonText>Workout Name</WorkoutButtonText>
-          <WorkoutButtonText>4:30</WorkoutButtonText>
+        <WorkoutListItem onClick={handleClick}>
+          <WorkoutButtonText>{workoutData.name}</WorkoutButtonText>
+          <WorkoutButtonText>
+            {formatTime(calculateTotalWorkoutTime(workoutData))}
+          </WorkoutButtonText>
         </WorkoutListItem>
       </WorkoutListWrapper>
       <AddWorkoutButton>
         <AddIcon sx={{ fontSize: "40px", color: "rgb(249, 12, 83)" }} />
-        <ButtonText>Add Workout</ButtonText>
+        <ButtonText onClick={handleClick}>Add Workout</ButtonText>
       </AddWorkoutButton>
     </Container>
   );

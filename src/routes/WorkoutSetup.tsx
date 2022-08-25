@@ -5,9 +5,10 @@ import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceR
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import TimerPage from "../components/TimerPage";
 import { workoutDataState } from "../atoms/workoutData";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { calculateTotalWorkoutTime } from "../utils/calculateTotalWorkoutTime";
 import { formatTime } from "../utils/formatTime";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -63,7 +64,8 @@ const Timer = styled.p`
 `;
 
 export default function WorkoutSetup() {
-  const workoutData = useRecoilValue(workoutDataState);
+  const navigate = useNavigate();
+  const [workoutData, setWorkoutData] = useRecoilState(workoutDataState);
   const [nameText, setNameText] = useState(workoutData.name);
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
@@ -71,18 +73,40 @@ export default function WorkoutSetup() {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       (event.target as HTMLInputElement).blur();
+      handleBlur();
     }
-  }
+  };
+
+  const handleBlur = () => {
+    if (!nameText) {
+      setNameText(workoutData.name);
+      return;
+    }
+
+    setWorkoutData({
+      ...workoutData,
+      name: nameText,
+    });
+  };
+
+  const handleClick = () => {
+    navigate("/");
+  };
 
   return (
     <Container>
       <Header>
-        <IconWrapper>
+        <IconWrapper onClick={handleClick}>
           <KeyboardBackspaceRoundedIcon sx={{ fontSize: "30px" }} />
         </IconWrapper>
-        <WorkoutName value={nameText} onChange={handleChange} onKeyDown={handleKeyDown}/>
+        <WorkoutName
+          value={nameText}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          onBlur={handleBlur}
+        />
         <IconWrapper>
           <DeleteRoundedIcon sx={{ fontSize: "30px" }} />
         </IconWrapper>
