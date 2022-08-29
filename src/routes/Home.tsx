@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { workoutDataState } from "../atoms/workoutData";
 import { calculateTotalWorkoutTime } from "../utils/calculateTotalWorkoutTime";
 import { formatTime } from "../utils/formatTime";
@@ -76,7 +76,7 @@ const ButtonText = styled.p`
 
 export default function Home() {
   const navigate = useNavigate();
-  const workoutData = useRecoilValue(workoutDataState);
+  const [workoutData, setWorkoutData] = useRecoilState(workoutDataState);
   const setSelectedWorkoutData = useSetRecoilState(selectedWorkoutDataState);
   const setSelectedWorkoutIndex = useSetRecoilState(selectedWorkoutIndexState);
 
@@ -89,6 +89,7 @@ export default function Home() {
   const addNewWorkout = () => {
     setSelectedWorkoutData(defaultWorkoutData);
     setSelectedWorkoutIndex(workoutData.length);
+    setWorkoutData([...workoutData, defaultWorkoutData])
     navigate("/workout-options");
   };
 
