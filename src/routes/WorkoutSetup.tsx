@@ -104,6 +104,13 @@ export default function WorkoutSetup() {
     setWorkoutData(workoutDataCopy);
   };
 
+  const deleteWorkout = () => {
+    navigate("/")
+    const workoutDataCopy = [...workoutData];
+    workoutDataCopy.splice(selectedWorkoutIndex as number, 1);
+    setWorkoutData(workoutDataCopy)
+  };
+
   return (
     <Container>
       <Header>
@@ -116,7 +123,7 @@ export default function WorkoutSetup() {
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
         />
-        <IconWrapper>
+        <IconWrapper onClick={deleteWorkout}>
           <DeleteRoundedIcon sx={{ fontSize: "30px" }} />
         </IconWrapper>
       </Header>
