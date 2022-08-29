@@ -89,7 +89,7 @@ export default function Home() {
   const addNewWorkout = () => {
     setSelectedWorkoutData(defaultWorkoutData);
     setSelectedWorkoutIndex(workoutData.length);
-    setWorkoutData([...workoutData, defaultWorkoutData])
+    setWorkoutData([...workoutData, defaultWorkoutData]);
     navigate("/workout-options");
   };
 
@@ -98,7 +98,10 @@ export default function Home() {
       <Title>Interval Timer</Title>
       <WorkoutListWrapper>
         {workoutData.map((workout: workoutData, index: number) => (
-          <WorkoutListItem onClick={() => openWorkout(workout, index)}>
+          <WorkoutListItem
+            key={index}
+            onClick={() => openWorkout(workout, index)}
+          >
             <WorkoutButtonText>{workout.name}</WorkoutButtonText>
             <WorkoutButtonText>
               {formatTime(calculateTotalWorkoutTime(workout))}
