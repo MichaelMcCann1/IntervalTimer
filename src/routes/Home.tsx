@@ -2,10 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { workoutDataState } from "../atoms/workoutData";
 import { calculateTotalWorkoutTime } from "../utils/calculateTotalWorkoutTime";
 import { formatTime } from "../utils/formatTime";
+import { workoutData } from "../Types";
+import { selectedWorkoutDataState } from "../atoms/selectedWorkoutData";
+import { defaultWorkoutData } from "../constants/workoutData";
+import { selectedWorkoutIndexState } from "../atoms/selectedWorkoutDataIndex";
 
 const Container = styled.div`
   width: 100%;
@@ -72,9 +76,20 @@ const ButtonText = styled.p`
 
 export default function Home() {
   const navigate = useNavigate();
-  const workoutData = useRecoilValue(workoutDataState);
+  const [workoutData, setWorkoutData] = useRecoilState(workoutDataState);
+  const setSelectedWorkoutData = useSetRecoilState(selectedWorkoutDataState);
+  const setSelectedWorkoutIndex = useSetRecoilState(selectedWorkoutIndexState);
 
-  const handleClick = () => {
+  const openWorkout = (workout: workoutData, index: number) => {
+    setSelectedWorkoutData(workout);
+    setSelectedWorkoutIndex(index);
+    navigate("/workout-options");
+  };
+
+  const addNewWorkout = () => {
+    setSelectedWorkoutData(defaultWorkoutData);
+    setSelectedWorkoutIndex(workoutData.length);
+    setWorkoutData([...workoutData, defaultWorkoutData]);
     navigate("/workout-options");
   };
 
@@ -82,16 +97,21 @@ export default function Home() {
     <Container>
       <Title>Interval Timer</Title>
       <WorkoutListWrapper>
-        <WorkoutListItem onClick={handleClick}>
-          <WorkoutButtonText>{workoutData.name}</WorkoutButtonText>
-          <WorkoutButtonText>
-            {formatTime(calculateTotalWorkoutTime(workoutData))}
-          </WorkoutButtonText>
-        </WorkoutListItem>
+        {workoutData.map((workout: workoutData, index: number) => (
+          <WorkoutListItem
+            key={index}
+            onClick={() => openWorkout(workout, index)}
+          >
+            <WorkoutButtonText>{workout.name}</WorkoutButtonText>
+            <WorkoutButtonText>
+              {formatTime(calculateTotalWorkoutTime(workout))}
+            </WorkoutButtonText>
+          </WorkoutListItem>
+        ))}
       </WorkoutListWrapper>
       <AddWorkoutButton>
         <AddIcon sx={{ fontSize: "40px", color: "rgb(249, 12, 83)" }} />
-        <ButtonText onClick={handleClick}>Add Workout</ButtonText>
+        <ButtonText onClick={addNewWorkout}>Add Workout</ButtonText>
       </AddWorkoutButton>
     </Container>
   );

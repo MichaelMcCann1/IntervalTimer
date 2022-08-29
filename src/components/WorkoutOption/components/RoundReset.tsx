@@ -3,19 +3,19 @@ import { Container, IconWrapper, Title, Count } from "./WorkoutOptionsElements";
 import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
 import { useTimerPageData } from "../../../utils/hooks/useTimerPageData";
 import { useRecoilValue } from "recoil";
-import { workoutDataState } from "../../../atoms/workoutData";
 import { workoutDataKeys } from "../../../constants/workoutData";
 import { formatTime } from "../../../utils/formatTime";
+import { selectedWorkoutDataState } from "../../../atoms/selectedWorkoutData";
 
 export default function RoundReset() {
   const setTimerPageData = useTimerPageData();
-  const workoutData = useRecoilValue(workoutDataState);
+  const selectedWorkoutData = useRecoilValue(selectedWorkoutDataState);
 
   const handleClick = () => {
     setTimerPageData({
       backgroundColor: "rgb(196, 209, 111)",
       titleText: "Round Reset",
-      value: workoutData.reset,
+      value: selectedWorkoutData.reset,
       icon: <AccessTimeRoundedIcon />,
       option: workoutDataKeys.reset,
       valueFormatter: formatTime,
@@ -61,7 +61,9 @@ export default function RoundReset() {
         <AccessTimeRoundedIcon sx={{ color: "rgb(204,204,0)" }} />
       </IconWrapper>
       <Title>Round Reset</Title>
-      <Count fontColor="rgb(204,204,0)">{formatTime(workoutData.reset)}</Count>
+      <Count fontColor="rgb(204,204,0)">
+        {formatTime(selectedWorkoutData.reset)}
+      </Count>
     </Container>
   );
 }

@@ -9,6 +9,8 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { calculateTotalWorkoutTime } from "../utils/calculateTotalWorkoutTime";
 import { formatTime } from "../utils/formatTime";
 import { useNavigate } from "react-router-dom";
+import { selectedWorkoutDataState } from "../atoms/selectedWorkoutData";
+import { selectedWorkoutIndexState } from "../atoms/selectedWorkoutDataIndex";
 
 const Container = styled.div`
   width: 100%;
@@ -66,7 +68,11 @@ const Timer = styled.p`
 export default function WorkoutSetup() {
   const navigate = useNavigate();
   const [workoutData, setWorkoutData] = useRecoilState(workoutDataState);
-  const [nameText, setNameText] = useState(workoutData.name);
+  const [selectedWorkoutData, setSelectedWorkoutData] = useRecoilState(
+    selectedWorkoutDataState
+  );
+  const selectedWorkoutIndex = useRecoilValue(selectedWorkoutIndexState);
+  const [nameText, setNameText] = useState(selectedWorkoutData.name);
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     setNameText((event.target as HTMLInputElement).value);
@@ -81,24 +87,34 @@ export default function WorkoutSetup() {
 
   const handleBlur = () => {
     if (!nameText) {
-      setNameText(workoutData.name);
+      setNameText(selectedWorkoutData.name);
       return;
     }
 
-    setWorkoutData({
-      ...workoutData,
+    setSelectedWorkoutData({
+      ...selectedWorkoutData,
       name: nameText,
     });
   };
 
-  const handleClick = () => {
+  const handleBackButtonClick = () => {
     navigate("/");
+    const workoutDataCopy = [...workoutData];
+    workoutDataCopy[selectedWorkoutIndex as number] = selectedWorkoutData;
+    setWorkoutData(workoutDataCopy);
+  };
+
+  const deleteWorkout = () => {
+    navigate("/")
+    const workoutDataCopy = [...workoutData];
+    workoutDataCopy.splice(selectedWorkoutIndex as number, 1);
+    setWorkoutData(workoutDataCopy)
   };
 
   return (
     <Container>
       <Header>
-        <IconWrapper onClick={handleClick}>
+        <IconWrapper onClick={handleBackButtonClick}>
           <KeyboardBackspaceRoundedIcon sx={{ fontSize: "30px" }} />
         </IconWrapper>
         <WorkoutName
@@ -107,11 +123,13 @@ export default function WorkoutSetup() {
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
         />
-        <IconWrapper>
+        <IconWrapper onClick={deleteWorkout}>
           <DeleteRoundedIcon sx={{ fontSize: "30px" }} />
         </IconWrapper>
       </Header>
-      <Timer>{formatTime(calculateTotalWorkoutTime(workoutData))}</Timer>
+      <Timer>
+        {formatTime(calculateTotalWorkoutTime(selectedWorkoutData))}
+      </Timer>
       <WorkoutControls />
       <TimerPage />
     </Container>

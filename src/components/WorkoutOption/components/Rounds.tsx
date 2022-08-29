@@ -3,21 +3,21 @@ import { Container, IconWrapper, Title, Count } from "./WorkoutOptionsElements";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import { useTimerPageData } from "../../../utils/hooks/useTimerPageData";
 import { useRecoilValue } from "recoil";
-import { workoutDataState } from "../../../atoms/workoutData";
 import { workoutDataKeys } from "../../../constants/workoutData";
+import { selectedWorkoutDataState } from "../../../atoms/selectedWorkoutData";
 
 export default function Rounds() {
   const setTimerPageData = useTimerPageData();
-  const workoutData = useRecoilValue(workoutDataState);
+  const selectedWorkoutData = useRecoilValue(selectedWorkoutDataState);
 
   const handleClick = () => {
     setTimerPageData({
       backgroundColor: "rgb(142, 111, 209)",
       titleText: "Rounds",
-      value: workoutData.rounds,
+      value: selectedWorkoutData.rounds,
       icon: <RefreshRoundedIcon />,
       option: workoutDataKeys.rounds,
-      valueFormatter: value => `${value}X`,
+      valueFormatter: (value) => `${value}X`,
       min: 1,
       max: 5,
       step: 1,
@@ -52,7 +52,7 @@ export default function Rounds() {
         <RefreshRoundedIcon sx={{ color: "royalblue" }} />
       </IconWrapper>
       <Title>Rounds</Title>
-      <Count fontColor="royalblue">{workoutData.rounds}X</Count>
+      <Count fontColor="royalblue">{selectedWorkoutData.rounds}X</Count>
     </Container>
   );
 }
