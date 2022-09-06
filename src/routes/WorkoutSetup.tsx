@@ -9,7 +9,6 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { calculateTotalWorkoutTime } from "../utils/calculateTotalWorkoutTime";
 import { formatTime } from "../utils/formatTime";
 import { useNavigate } from "react-router-dom";
-import { selectedWorkoutDataState } from "../atoms/selectedWorkoutData";
 import { selectedWorkoutIndexState } from "../atoms/selectedWorkoutDataIndex";
 
 const Container = styled.div`
@@ -68,11 +67,10 @@ const Timer = styled.p`
 export default function WorkoutSetup() {
   const navigate = useNavigate();
   const [workoutData, setWorkoutData] = useRecoilState(workoutDataState);
-  const [selectedWorkoutData, setSelectedWorkoutData] = useRecoilState(
-    selectedWorkoutDataState
-  );
   const selectedWorkoutIndex = useRecoilValue(selectedWorkoutIndexState);
-  const [nameText, setNameText] = useState(selectedWorkoutData.name);
+  const [nameText, setNameText] = useState(
+    workoutData[selectedWorkoutIndex].name
+  );
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     setNameText((event.target as HTMLInputElement).value);
@@ -87,28 +85,27 @@ export default function WorkoutSetup() {
 
   const handleBlur = () => {
     if (!nameText) {
-      setNameText(selectedWorkoutData.name);
+      setNameText(workoutData[selectedWorkoutIndex].name);
       return;
     }
 
-    setSelectedWorkoutData({
-      ...selectedWorkoutData,
+    const workoutDataCopy = [...workoutData];
+    workoutDataCopy[selectedWorkoutIndex] = {
+      ...workoutData[selectedWorkoutIndex],
       name: nameText,
-    });
+    };
+    setWorkoutData(workoutDataCopy);
   };
 
   const handleBackButtonClick = () => {
     navigate("/");
-    const workoutDataCopy = [...workoutData];
-    workoutDataCopy[selectedWorkoutIndex as number] = selectedWorkoutData;
-    setWorkoutData(workoutDataCopy);
   };
 
   const deleteWorkout = () => {
-    navigate("/")
+    navigate("/");
     const workoutDataCopy = [...workoutData];
-    workoutDataCopy.splice(selectedWorkoutIndex as number, 1);
-    setWorkoutData(workoutDataCopy)
+    workoutDataCopy.splice(selectedWorkoutIndex, 1);
+    setWorkoutData(workoutDataCopy);
   };
 
   return (
@@ -128,7 +125,9 @@ export default function WorkoutSetup() {
         </IconWrapper>
       </Header>
       <Timer>
-        {formatTime(calculateTotalWorkoutTime(selectedWorkoutData))}
+        {formatTime(
+          calculateTotalWorkoutTime(workoutData[selectedWorkoutIndex as number])
+        )}
       </Timer>
       <WorkoutControls />
       <TimerPage />

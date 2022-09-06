@@ -1,21 +1,22 @@
-import React from "react";
 import { Container, IconWrapper, Title, Count } from "./WorkoutOptionsElements";
 import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
 import { useTimerPageData } from "../../../utils/hooks/useTimerPageData";
 import { useRecoilValue } from "recoil";
 import { workoutDataKeys } from "../../../constants/workoutData";
 import { formatTime } from "../../../utils/formatTime";
-import { selectedWorkoutDataState } from "../../../atoms/selectedWorkoutData";
+import { workoutDataState } from "../../../atoms/workoutData";
+import { selectedWorkoutIndexState } from "../../../atoms/selectedWorkoutDataIndex";
 
 export default function RoundReset() {
   const setTimerPageData = useTimerPageData();
-  const selectedWorkoutData = useRecoilValue(selectedWorkoutDataState);
+  const workoutData = useRecoilValue(workoutDataState);
+  const selectedWorkoutIndex = useRecoilValue(selectedWorkoutIndexState);
 
   const handleClick = () => {
     setTimerPageData({
       backgroundColor: "rgb(196, 209, 111)",
       titleText: "Round Reset",
-      value: selectedWorkoutData.reset,
+      value: workoutData[selectedWorkoutIndex].reset,
       icon: <AccessTimeRoundedIcon />,
       option: workoutDataKeys.reset,
       valueFormatter: formatTime,
@@ -62,7 +63,7 @@ export default function RoundReset() {
       </IconWrapper>
       <Title>Round Reset</Title>
       <Count fontColor="rgb(204,204,0)">
-        {formatTime(selectedWorkoutData.reset)}
+        {formatTime(workoutData[selectedWorkoutIndex].reset)}
       </Count>
     </Container>
   );

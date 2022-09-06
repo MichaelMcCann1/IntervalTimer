@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import TimerSlider from "../TimerSlider";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
@@ -6,7 +5,8 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { timerPageOpenState } from "../../atoms/timerPageOpen";
 import { TimerPageDataState } from "../../atoms/TimerPageOptions";
 import { TimerPageOption } from "../../Types";
-import { selectedWorkoutDataState } from "../../atoms/selectedWorkoutData";
+import { workoutDataState } from "../../atoms/workoutData";
+import { selectedWorkoutIndexState } from "../../atoms/selectedWorkoutDataIndex";
 
 interface ContainerProps {
   open: boolean;
@@ -54,19 +54,20 @@ const IconWrapper = styled.div`
 
 export default function TimerPage() {
   const [timerPageOpen, setTimerPageOpen] = useRecoilState(timerPageOpenState);
-  const [selectedWorkoutData, setselectedWorkoutData] = useRecoilState(
-    selectedWorkoutDataState
-  );
+  const [workoutData, setWorkoutData] = useRecoilState(workoutDataState);
+  const selectedWorkoutIndex = useRecoilValue(selectedWorkoutIndexState);
   const timerPageData = useRecoilValue(TimerPageDataState);
 
   const { titleText, value, backgroundColor, icon, option, valueFormatter } =
     timerPageData as TimerPageOption;
 
   const closeTimerPage = () => {
-    setselectedWorkoutData({
-      ...selectedWorkoutData,
+    const workoutDataCopy = [...workoutData];
+    workoutDataCopy[selectedWorkoutIndex] = {
+      ...workoutDataCopy[selectedWorkoutIndex],
       [option]: timerPageData.value,
-    });
+    };
+    setWorkoutData(workoutDataCopy);
     setTimerPageOpen(false);
   };
 
