@@ -7,7 +7,6 @@ import { workoutDataState } from "../atoms/workoutData";
 import { calculateTotalWorkoutTime } from "../utils/calculateTotalWorkoutTime";
 import { formatTime } from "../utils/formatTime";
 import { workoutData } from "../Types";
-import { selectedWorkoutDataState } from "../atoms/selectedWorkoutData";
 import { defaultWorkoutData } from "../constants/workoutData";
 import { selectedWorkoutIndexState } from "../atoms/selectedWorkoutDataIndex";
 
@@ -77,17 +76,14 @@ const ButtonText = styled.p`
 export default function Home() {
   const navigate = useNavigate();
   const [workoutData, setWorkoutData] = useRecoilState(workoutDataState);
-  const setSelectedWorkoutData = useSetRecoilState(selectedWorkoutDataState);
   const setSelectedWorkoutIndex = useSetRecoilState(selectedWorkoutIndexState);
 
   const openWorkout = (workout: workoutData, index: number) => {
-    setSelectedWorkoutData(workout);
     setSelectedWorkoutIndex(index);
     navigate("/workout-options");
   };
 
   const addNewWorkout = () => {
-    setSelectedWorkoutData(defaultWorkoutData);
     setSelectedWorkoutIndex(workoutData.length);
     setWorkoutData([...workoutData, defaultWorkoutData]);
     navigate("/workout-options");

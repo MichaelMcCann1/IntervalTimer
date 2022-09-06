@@ -1,21 +1,22 @@
-import React from "react";
 import { Container, IconWrapper, Title, Count } from "./WorkoutOptionsElements";
 import PlayCircleOutlineRoundedIcon from "@mui/icons-material/PlayCircleOutlineRounded";
 import { useRecoilValue } from "recoil";
 import { formatTime } from "../../../utils/formatTime";
 import { useTimerPageData } from "../../../utils/hooks/useTimerPageData";
 import { workoutDataKeys } from "../../../constants/workoutData";
-import { selectedWorkoutDataState } from "../../../atoms/selectedWorkoutData";
+import { workoutDataState } from "../../../atoms/workoutData";
+import { selectedWorkoutIndexState } from "../../../atoms/selectedWorkoutDataIndex";
 
 export default function Work() {
   const setTimerPageData = useTimerPageData();
-  const selectedWorkoutData = useRecoilValue(selectedWorkoutDataState);
+  const workoutData = useRecoilValue(workoutDataState);
+  const selectedWorkoutIndex = useRecoilValue(selectedWorkoutIndexState);
 
   const handleClick = () => {
     setTimerPageData({
       backgroundColor: "rgb(111, 209, 111)",
       titleText: "Work",
-      value: selectedWorkoutData.work,
+      value: workoutData[selectedWorkoutIndex].work,
       icon: <PlayCircleOutlineRoundedIcon />,
       option: workoutDataKeys.work,
       valueFormatter: formatTime,
@@ -61,7 +62,9 @@ export default function Work() {
         <PlayCircleOutlineRoundedIcon sx={{ color: "green" }} />
       </IconWrapper>
       <Title>Work</Title>
-      <Count fontColor="green">{formatTime(selectedWorkoutData.work)}</Count>
+      <Count fontColor="green">
+        {formatTime(workoutData[selectedWorkoutIndex].work)}
+      </Count>
     </Container>
   );
 }

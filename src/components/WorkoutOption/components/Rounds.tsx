@@ -1,20 +1,21 @@
-import React from "react";
 import { Container, IconWrapper, Title, Count } from "./WorkoutOptionsElements";
 import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 import { useTimerPageData } from "../../../utils/hooks/useTimerPageData";
 import { useRecoilValue } from "recoil";
 import { workoutDataKeys } from "../../../constants/workoutData";
-import { selectedWorkoutDataState } from "../../../atoms/selectedWorkoutData";
+import { workoutDataState } from "../../../atoms/workoutData";
+import { selectedWorkoutIndexState } from "../../../atoms/selectedWorkoutDataIndex";
 
 export default function Rounds() {
   const setTimerPageData = useTimerPageData();
-  const selectedWorkoutData = useRecoilValue(selectedWorkoutDataState);
+  const workoutData = useRecoilValue(workoutDataState);
+  const selectedWorkoutIndex = useRecoilValue(selectedWorkoutIndexState);
 
   const handleClick = () => {
     setTimerPageData({
       backgroundColor: "rgb(142, 111, 209)",
       titleText: "Rounds",
-      value: selectedWorkoutData.rounds,
+      value: workoutData[selectedWorkoutIndex].rounds,
       icon: <RefreshRoundedIcon />,
       option: workoutDataKeys.rounds,
       valueFormatter: (value) => `${value}X`,
@@ -52,7 +53,9 @@ export default function Rounds() {
         <RefreshRoundedIcon sx={{ color: "royalblue" }} />
       </IconWrapper>
       <Title>Rounds</Title>
-      <Count fontColor="royalblue">{selectedWorkoutData.rounds}X</Count>
+      <Count fontColor="royalblue">
+        {workoutData[selectedWorkoutIndex].rounds}X
+      </Count>
     </Container>
   );
 }
