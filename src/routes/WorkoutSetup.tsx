@@ -10,6 +10,7 @@ import { calculateTotalWorkoutTime } from "../utils/calculateTotalWorkoutTime";
 import { formatTime } from "../utils/formatTime";
 import { useNavigate } from "react-router-dom";
 import { selectedWorkoutIndexState } from "../atoms/selectedWorkoutDataIndex";
+import DeleteWorkoutPopup from "../components/DeleteWorkoutPopup";
 
 const Container = styled.div`
   width: 100%;
@@ -71,6 +72,7 @@ export default function WorkoutSetup() {
   const [nameText, setNameText] = useState(
     workoutData[selectedWorkoutIndex].name
   );
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     setNameText((event.target as HTMLInputElement).value);
@@ -101,11 +103,8 @@ export default function WorkoutSetup() {
     navigate("/");
   };
 
-  const deleteWorkout = () => {
-    navigate("/");
-    const workoutDataCopy = [...workoutData];
-    workoutDataCopy.splice(selectedWorkoutIndex, 1);
-    setWorkoutData(workoutDataCopy);
+  const handleDeleteButtonClick = () => {
+    setModalOpen(true);
   };
 
   return (
@@ -120,7 +119,7 @@ export default function WorkoutSetup() {
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
         />
-        <IconWrapper onClick={deleteWorkout}>
+        <IconWrapper onClick={handleDeleteButtonClick}>
           <DeleteRoundedIcon sx={{ fontSize: "30px" }} />
         </IconWrapper>
       </Header>
@@ -131,6 +130,7 @@ export default function WorkoutSetup() {
       </Timer>
       <WorkoutControls />
       <TimerPage />
+      <DeleteWorkoutPopup modalOpen={modalOpen} setModalOpen={setModalOpen} />
     </Container>
   );
 }
