@@ -103,12 +103,8 @@ export default function WorkoutSetup() {
     navigate("/");
   };
 
-  const deleteWorkout = () => {
+  const handleDeleteButtonClick = () => {
     setModalOpen(true);
-    // navigate("/");
-    // const workoutDataCopy = [...workoutData];
-    // workoutDataCopy.splice(selectedWorkoutIndex, 1);
-    // setWorkoutData(workoutDataCopy);
   };
 
   return (
@@ -123,7 +119,7 @@ export default function WorkoutSetup() {
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
         />
-        <IconWrapper onClick={deleteWorkout}>
+        <IconWrapper onClick={handleDeleteButtonClick}>
           <DeleteRoundedIcon sx={{ fontSize: "30px" }} />
         </IconWrapper>
       </Header>
