@@ -6,6 +6,7 @@ import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import Exercises from "./components/Exercises";
 import Rounds from "./components/Rounds";
 import RoundReset from "./components/RoundReset";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -35,9 +36,15 @@ const StartButton = styled.button`
 `;
 
 export default function WorkoutControls() {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/workout");
+  };
+
   return (
     <Container>
-      <StartButton>
+      <StartButton onClick={handleClick}>
         <PlayArrowRoundedIcon
           sx={{
             fill: "rgb(249, 12, 83);",
