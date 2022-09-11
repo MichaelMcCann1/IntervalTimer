@@ -14,7 +14,7 @@ const Container = styled.div`
   width: 100vw;
   height: 100vh;
   background: rgb(111, 209, 111);
-  padding: 60px 20px 40px 20px;
+  padding: 50px 20px 40px 20px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -36,6 +36,7 @@ const IconWrapper = styled.button`
 `;
 
 const WorkoutName = styled.pattern`
+  margin-top: 5px;
   font-size: 24px;
   font-weight: 500;
 `;
