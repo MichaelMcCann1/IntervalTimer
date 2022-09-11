@@ -4,13 +4,17 @@ import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceR
 import WorkoutCounter from "../components/WorkoutCounter";
 import Timer from "../components/Timer";
 import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
-import PlayCircleRoundedIcon from '@mui/icons-material/PlayCircleRounded';
+import PlayCircleRoundedIcon from "@mui/icons-material/PlayCircleRounded";
+import { useRecoilValue } from "recoil";
+import { workoutDataState } from "../atoms/workoutData";
+import { selectedWorkoutIndexState } from "../atoms/selectedWorkoutDataIndex";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
   background: rgb(111, 209, 111);
-  padding: 60px 20px 40px 20px;
+  padding: 50px 20px 40px 20px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -32,6 +36,7 @@ const IconWrapper = styled.button`
 `;
 
 const WorkoutName = styled.pattern`
+  margin-top: 5px;
   font-size: 24px;
   font-weight: 500;
 `;
@@ -60,13 +65,26 @@ const ButtonsRow = styled.div`
 `;
 
 export default function WorkoutPage() {
+  const navigate = useNavigate();
+  const workoutData = useRecoilValue(workoutDataState);
+  const selectedWorkoutIndex = useRecoilValue(selectedWorkoutIndexState);
+
+  const selectedWorkout = workoutData[selectedWorkoutIndex];
+
+  const goBack = () => {
+    navigate("/workout-options");
+  };
+
   return (
     <Container>
       <Header>
-        <IconWrapper style={{ position: "absolute", left: "0px" }}>
+        <IconWrapper
+          onClick={goBack}
+          style={{ position: "absolute", left: "0px" }}
+        >
           <KeyboardBackspaceRoundedIcon sx={{ fontSize: "30px" }} />
         </IconWrapper>
-        <WorkoutName>Workout Name</WorkoutName>
+        <WorkoutName>{selectedWorkout.name}</WorkoutName>
       </Header>
       <WorkoutCounter />
       <Timer />

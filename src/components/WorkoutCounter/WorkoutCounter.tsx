@@ -1,4 +1,7 @@
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { selectedWorkoutIndexState } from "../../atoms/selectedWorkoutDataIndex";
+import { workoutDataState } from "../../atoms/workoutData";
 
 const Container = styled.div`
   display: flex;
@@ -20,15 +23,20 @@ const CounterWrapper = styled.div`
 const Text = styled.p``;
 
 export default function WorkoutCounter() {
+  const workoutData = useRecoilValue(workoutDataState);
+  const selectedWorkoutIndex = useRecoilValue(selectedWorkoutIndexState);
+
+  const selectedWorkout = workoutData[selectedWorkoutIndex];
+
   return (
     <Container>
       <CounterWrapper>
         <Text>Exercise</Text>
-        <Text>2/10</Text>
+        <Text>2/{selectedWorkout.exercises}</Text>
       </CounterWrapper>
       <CounterWrapper>
         <Text>Round</Text>
-        <Text>1/3</Text>
+        <Text>1/{selectedWorkout.rounds}</Text>
       </CounterWrapper>
     </Container>
   );
